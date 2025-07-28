@@ -398,66 +398,66 @@ def main():
                                 
                                 st.json(processing_details)
                             
-                            # Show all workflow steps data
-                            workflow_data = result.get("workflow_data", {})
-                            if workflow_data:
-                                st.markdown("---")
-                                st.markdown("### 🔄 Workflow Steps")
-                                
-                                # Create columns for the 4 steps
-                                col1, col2 = st.columns(2)
-                                
-                                # Step 1: Layout Extraction (JSON)
-                                with col1:
-                                    st.markdown("#### Step 1: Layout Extraction")
-                                    if workflow_data.get("layout_data"):
-                                        with st.expander("📋 Layout Data (JSON)", expanded=True):
-                                            st.json(workflow_data["layout_data"])
-                                    else:
-                                        st.info("No reference image provided - skipped layout extraction")
-                                
-                                # Step 2: Prompt Generation (JSON)
-                                with col2:
-                                    st.markdown("#### Step 2: Prompt Generation")
-                                    if workflow_data.get("generated_prompt"):
-                                        with st.expander("✍️ Generated Prompt", expanded=True):
-                                            st.text_area(
-                                                "Prompt sent to image generator:",
-                                                value=workflow_data["generated_prompt"],
-                                                height=200,
-                                                disabled=True
-                                            )
-                                    else:
-                                        st.warning("Prompt generation data not available")
-                                
-                                # Step 3: Generated Banner (Image)
-                                with col1:
-                                    st.markdown("#### Step 3: Banner Generation")
-                                    if workflow_data.get("image_data"):
-                                        try:
-                                            step3_image = base64.b64decode(workflow_data["image_data"])
-                                            st.image(step3_image, caption="Generated Banner (without text)", use_container_width=True)
-                                        except Exception as e:
-                                            st.error(f"Error displaying Step 3 image: {e}")
-                                    else:
-                                        st.warning("Banner generation data not available")
-                                
-                                # Step 4: Final Banner with Text (Image)
-                                with col2:
-                                    st.markdown("#### Step 4: Text Overlay")
-                                    if workflow_data.get("final_image_data"):
-                                        try:
-                                            step4_image = base64.b64decode(workflow_data["final_image_data"])
-                                            st.image(step4_image, caption="Final Banner (with text)", use_container_width=True)
-                                            
-                                            # Show text elements if available
-                                            if workflow_data.get("text_elements"):
-                                                with st.expander("📝 Text Elements Added"):
-                                                    st.json(workflow_data["text_elements"])
-                                        except Exception as e:
-                                            st.error(f"Error displaying Step 4 image: {e}")
-                                    else:
-                                        st.info("Text overlay step completed - using original image")
+                            # Workflow steps are hidden - remove this section to show them again
+                            # workflow_data = result.get("workflow_data", {})
+                            # if workflow_data:
+                            #     st.markdown("---")
+                            #     st.markdown("### 🔄 Workflow Steps")
+                            #     
+                            #     # Create columns for the 4 steps
+                            #     col1, col2 = st.columns(2)
+                            #     
+                            #     # Step 1: Layout Extraction (JSON)
+                            #     with col1:
+                            #         st.markdown("#### Step 1: Layout Extraction")
+                            #         if workflow_data.get("layout_data"):
+                            #             with st.expander("📋 Layout Data (JSON)", expanded=True):
+                            #                 st.json(workflow_data["layout_data"])
+                            #         else:
+                            #             st.info("No reference image provided - skipped layout extraction")
+                            #     
+                            #     # Step 2: Prompt Generation (JSON)
+                            #     with col2:
+                            #         st.markdown("#### Step 2: Prompt Generation")
+                            #         if workflow_data.get("generated_prompt"):
+                            #             with st.expander("✍️ Generated Prompt", expanded=True):
+                            #                 st.text_area(
+                            #                     "Prompt sent to image generator:",
+                            #                     value=workflow_data["generated_prompt"],
+                            #                     height=200,
+                            #                     disabled=True
+                            #                 )
+                            #         else:
+                            #             st.warning("Prompt generation data not available")
+                            #     
+                            #     # Step 3: Generated Banner (Image)
+                            #     with col1:
+                            #         st.markdown("#### Step 3: Banner Generation")
+                            #         if workflow_data.get("image_data"):
+                            #             try:
+                            #                 step3_image = base64.b64decode(workflow_data["image_data"])
+                            #                 st.image(step3_image, caption="Generated Banner (without text)", use_container_width=True)
+                            #             except Exception as e:
+                            #                 st.error(f"Error displaying Step 3 image: {e}")
+                            #         else:
+                            #             st.warning("Banner generation data not available")
+                            #     
+                            #     # Step 4: Final Banner with Text (Image)
+                            #     with col2:
+                            #         st.markdown("#### Step 4: Text Overlay")
+                            #         if workflow_data.get("final_image_data"):
+                            #             try:
+                            #                 step4_image = base64.b64decode(workflow_data["final_image_data"])
+                            #                 st.image(step4_image, caption="Final Banner (with text)", use_container_width=True)
+                            #                 
+                            #                 # Show text elements if available
+                            #                 if workflow_data.get("text_elements"):
+                            #                     with st.expander("📝 Text Elements Added"):
+                            #                         st.json(workflow_data["text_elements"])
+                            #             except Exception as e:
+                            #                 st.error(f"Error displaying Step 4 image: {e}")
+                            #         else:
+                            #             st.info("Text overlay step completed - using original image")
                         else:
                             st.error(f"❌ Banner generation failed: {result.get('error', 'Unknown error')}")
                     else:
