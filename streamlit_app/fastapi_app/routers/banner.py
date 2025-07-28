@@ -4,9 +4,17 @@ Provides endpoints for complete banner generation pipeline with persistent data 
 """
 
 import os
+import sys
 import time
 import logging
+from pathlib import Path
 from typing import Dict, Any, Optional
+
+# Ensure proper imports by adding parent directory to path
+current_dir = Path(__file__).parent.parent
+if str(current_dir) not in sys.path:
+    sys.path.insert(0, str(current_dir))
+
 from fastapi import APIRouter, HTTPException, status, Depends
 from openai import OpenAI
 from sqlalchemy.orm import Session

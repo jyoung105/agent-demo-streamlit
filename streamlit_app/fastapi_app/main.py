@@ -6,6 +6,11 @@ import os
 import sys
 from pathlib import Path
 
+# Ensure the current directory is in the Python path for imports
+current_dir = Path(__file__).parent
+if str(current_dir) not in sys.path:
+    sys.path.insert(0, str(current_dir))
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse

@@ -42,24 +42,34 @@ fastapi_app = None
 def import_fastapi_app():
     """Import FastAPI app with proper directory context"""
     try:
-        # Change to fastapi_app directory for imports
+        # Save original cwd
         import os
+        import sys
         original_cwd = os.getcwd()
+        
+        # Add fastapi_app directory to Python path
         fastapi_dir = Path(__file__).parent / "fastapi_app"
-        os.chdir(str(fastapi_dir))
+        if str(fastapi_dir) not in sys.path:
+            sys.path.insert(0, str(fastapi_dir))
         
-        from main import app as app
+        # Also add the parent directory for shared imports
+        parent_dir = Path(__file__).parent
+        if str(parent_dir) not in sys.path:
+            sys.path.insert(0, str(parent_dir))
         
-        # Restore original directory
-        os.chdir(original_cwd)
+        # Import the fastapi_app package to initialize paths
+        import fastapi_app
+        
+        # Now import the app from main
+        from fastapi_app.main import app
+        
         return app, True
     except ImportError as e:
-        # Restore original directory on error
-        try:
-            os.chdir(original_cwd)
-        except:
-            pass
         st.error(f"Failed to import FastAPI app: {e}")
+        st.error(f"Current path: {sys.path}")
+        st.error(f"Current directory: {os.getcwd()}")
+        import traceback
+        st.error(f"Traceback: {traceback.format_exc()}")
         return None, False
 
 # Configure page
