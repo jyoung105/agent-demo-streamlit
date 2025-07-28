@@ -1,0 +1,17 @@
+# Streamlit Frontend Dependencies
+streamlit==1.41.1
+requests==2.32.3
+pillow==11.3.0
+python-dotenv==1.0.1
+
+# FastAPI Backend Dependencies
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+pydantic==2.10.4
+openai==1.58.1
+python-multipart==0.0.16
+sqlalchemy==2.0.36
+alembic==1.14.0
+
+# Additional dependencies for embedded mode
+# asyncio-compat==0.1.2  # Not needed for Python 3.13
