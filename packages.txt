@@ -1,5 +1,4 @@
-# System packages for Streamlit Cloud
-# Add any system-level dependencies here
-
 curl
 wget
+python3-dev
+build-essential
