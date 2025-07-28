@@ -15,7 +15,7 @@ from database import (
     PromptGeneration, LayoutExtraction, update_step_status, 
     StepStatus, JobStatus, update_job_status
 )
-from ..config import get_config, OPENAI_TEXT_MODEL, OPENAI_TEXT_MAX_TOKENS, OPENAI_TEXT_TEMPERATURE
+from config import get_config, OPENAI_TEXT_MODEL, OPENAI_TEXT_MAX_TOKENS, OPENAI_TEXT_TEMPERATURE
 
 logger = logging.getLogger(__name__)
 

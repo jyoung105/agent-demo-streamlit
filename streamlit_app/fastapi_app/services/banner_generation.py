@@ -10,7 +10,7 @@ import os
 import sys
 from typing import Dict, Any, Optional, TYPE_CHECKING
 from pathlib import Path
-from ..config import get_config
+from config import get_config
 
 # Add streamlit_app directory to path for imports
 streamlit_app_dir = Path(__file__).parent.parent.parent

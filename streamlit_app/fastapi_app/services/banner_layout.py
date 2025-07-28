@@ -20,7 +20,7 @@ from database import (
     LayoutExtraction, BannerJob, update_step_status, 
     StepStatus, JobStatus, update_job_status
 )
-from ..config import get_config, OPENAI_VISION_MODEL, OPENAI_VISION_MAX_TOKENS, OPENAI_VISION_TEMPERATURE
+from config import get_config, OPENAI_VISION_MODEL, OPENAI_VISION_MAX_TOKENS, OPENAI_VISION_TEMPERATURE
 
 # Add streamlit_app directory to path for bbox system imports
 streamlit_app_dir = Path(__file__).parent.parent.parent
