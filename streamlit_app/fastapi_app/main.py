@@ -6,16 +6,13 @@ import os
 import sys
 from pathlib import Path
 
-# Ensure the current directory is in the Python path for imports
-current_dir = Path(__file__).parent
-if str(current_dir) not in sys.path:
-    sys.path.insert(0, str(current_dir))
+# No path manipulation needed - using absolute imports
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from routers.banner import router as banner_router
-from database import init_database
+from fastapi_app.routers.banner import router as banner_router
+from fastapi_app.database import init_database
 from datetime import datetime
 import logging
 from dotenv import load_dotenv

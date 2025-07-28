@@ -18,7 +18,7 @@ parent_dir = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(parent_dir))
 
 from shared.banner import BannerLayoutData, BannerGenerationResponse
-from database import (
+from fastapi_app.database import (
     PromptGeneration, LayoutExtraction, update_step_status, 
     StepStatus, JobStatus, update_job_status
 )

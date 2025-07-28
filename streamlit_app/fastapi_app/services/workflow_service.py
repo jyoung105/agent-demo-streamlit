@@ -12,14 +12,14 @@ from shared.banner import (
     BannerWorkflowRequest, BannerWorkflowResponse, BannerWorkflowStep,
     BannerGenerationResponse, BannerLayoutData
 )
-from database import (
+from fastapi_app.database import (
     create_banner_job, get_job_by_id, update_job_status,
     JobStatus, StepStatus, BannerJob, LayoutExtraction, PromptGeneration, TextOverlay
 )
-from services.banner_layout import BannerLayoutService
-from services.banner_prompt import BannerPromptService
-from services.banner_generation import BannerGenerationService
-from services.banner_text_overlay import BannerTextOverlayService
+from fastapi_app.services.banner_layout import BannerLayoutService
+from fastapi_app.services.banner_prompt import BannerPromptService
+from fastapi_app.services.banner_generation import BannerGenerationService
+from fastapi_app.services.banner_text_overlay import BannerTextOverlayService
 
 logger = logging.getLogger(__name__)
 

@@ -11,7 +11,7 @@ from typing import Dict, Any, Optional, List, Tuple
 from PIL import Image, ImageDraw, ImageFont
 from sqlalchemy.orm import Session
 from shared.banner import BannerLayoutData, TextElement
-from database import (
+from fastapi_app.database import (
     TextOverlay, ImageGeneration, update_step_status,
     StepStatus, JobStatus, update_job_status
 )

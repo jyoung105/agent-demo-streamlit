@@ -10,15 +10,12 @@ import logging
 from pathlib import Path
 from typing import Dict, Any, Optional
 
-# Ensure proper imports by adding parent directory to path
-current_dir = Path(__file__).parent.parent
-if str(current_dir) not in sys.path:
-    sys.path.insert(0, str(current_dir))
+# No path manipulation needed - using absolute imports
 
 from fastapi import APIRouter, HTTPException, status, Depends
 from openai import OpenAI
 from sqlalchemy.orm import Session
-from config import get_config, OPENAI_API_KEY
+from fastapi_app.config import get_config, OPENAI_API_KEY
 
 from shared.banner import (
     BannerLayoutRequest, BannerLayoutResponse,
@@ -27,12 +24,12 @@ from shared.banner import (
     BannerWorkflowRequest, BannerWorkflowResponse, BannerWorkflowStep,
     HealthResponse, ErrorResponse
 )
-from services.banner_layout import BannerLayoutService
-from services.banner_prompt import BannerPromptService
-from services.banner_generation import BannerGenerationService
-from services.banner_tools import BannerToolsService
-from services.workflow_service import BannerWorkflowService
-from database import get_database_session, init_database
+from fastapi_app.services.banner_layout import BannerLayoutService
+from fastapi_app.services.banner_prompt import BannerPromptService
+from fastapi_app.services.banner_generation import BannerGenerationService
+from fastapi_app.services.banner_tools import BannerToolsService
+from fastapi_app.services.workflow_service import BannerWorkflowService
+from fastapi_app.database import get_database_session, init_database
 
 logger = logging.getLogger(__name__)
 

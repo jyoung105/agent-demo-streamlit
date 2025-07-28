@@ -11,11 +11,11 @@ from typing import Dict, Any, List, Tuple
 from openai import OpenAI
 from sqlalchemy.orm import Session
 from shared.banner import BannerLayoutData, BannerPromptResponse, TextElement, Subject
-from database import (
+from fastapi_app.database import (
     PromptGeneration, LayoutExtraction, update_step_status, 
     StepStatus, JobStatus, update_job_status
 )
-from config import get_config, OPENAI_TEXT_MODEL, OPENAI_TEXT_MAX_TOKENS, OPENAI_TEXT_TEMPERATURE
+from fastapi_app.config import get_config, OPENAI_TEXT_MODEL, OPENAI_TEXT_MAX_TOKENS, OPENAI_TEXT_TEMPERATURE
 
 logger = logging.getLogger(__name__)
 

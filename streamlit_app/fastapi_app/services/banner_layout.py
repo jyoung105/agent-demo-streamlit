@@ -16,11 +16,11 @@ from openai import OpenAI
 from sqlalchemy.orm import Session
 from pathlib import Path
 from shared.banner import BannerLayoutData, BannerLayoutResponse
-from database import (
+from fastapi_app.database import (
     LayoutExtraction, BannerJob, update_step_status, 
     StepStatus, JobStatus, update_job_status
 )
-from config import get_config, OPENAI_VISION_MODEL, OPENAI_VISION_MAX_TOKENS, OPENAI_VISION_TEMPERATURE
+from fastapi_app.config import get_config, OPENAI_VISION_MODEL, OPENAI_VISION_MAX_TOKENS, OPENAI_VISION_TEMPERATURE
 
 # Add streamlit_app directory to path for bbox system imports
 streamlit_app_dir = Path(__file__).parent.parent.parent
