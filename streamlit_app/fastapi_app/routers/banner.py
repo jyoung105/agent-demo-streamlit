@@ -10,6 +10,7 @@ from typing import Dict, Any, Optional
 from fastapi import APIRouter, HTTPException, status, Depends
 from openai import OpenAI
 from sqlalchemy.orm import Session
+from ..config import get_config, OPENAI_API_KEY
 
 from shared.banner import (
     BannerLayoutRequest, BannerLayoutResponse,
@@ -32,7 +33,7 @@ router = APIRouter(prefix="/api/banner", tags=["banner"])
 
 def get_openai_client() -> OpenAI:
     """Dependency to get OpenAI client."""
-    api_key = os.getenv("OPENAI_API_KEY")
+    api_key = OPENAI_API_KEY
     if not api_key:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
@@ -333,7 +334,7 @@ async def start_workflow_async(
                 """Execute workflow in background thread"""
                 try:
                     # Create fresh instances for background execution
-                    bg_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+                    bg_client = OpenAI(api_key=OPENAI_API_KEY)
                     bg_db = next(get_database_session())
                     bg_workflow_service = BannerWorkflowService(bg_client, bg_db)
                     

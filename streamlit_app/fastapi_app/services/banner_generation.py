@@ -10,6 +10,7 @@ import os
 import sys
 from typing import Dict, Any, Optional, TYPE_CHECKING
 from pathlib import Path
+from ..config import get_config
 
 # Add streamlit_app directory to path for imports
 streamlit_app_dir = Path(__file__).parent.parent.parent
@@ -48,7 +49,7 @@ class BannerGenerationService:
     def __init__(self, openai_client: OpenAI, db_session: Optional['Session'] = None):
         self.client = openai_client
         self.db = db_session  # Database session for future database integration
-        self.model = os.getenv("OPENAI_IMAGE_MODEL", "gpt-image-1")
+        self.model = get_config("OPENAI_IMAGE_MODEL", "gpt-image-1")
         
         # Initialize bbox system components
         self.bbox_extractor = BboxExtractor()

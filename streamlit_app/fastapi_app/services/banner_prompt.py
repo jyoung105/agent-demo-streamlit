@@ -15,6 +15,7 @@ from database import (
     PromptGeneration, LayoutExtraction, update_step_status, 
     StepStatus, JobStatus, update_job_status
 )
+from ..config import get_config, OPENAI_TEXT_MODEL, OPENAI_TEXT_MAX_TOKENS, OPENAI_TEXT_TEMPERATURE
 
 logger = logging.getLogger(__name__)
 
@@ -67,9 +68,9 @@ class BannerPromptService:
     def __init__(self, openai_client: OpenAI, db_session: Session):
         self.client = openai_client
         self.db = db_session
-        self.model = os.getenv("OPENAI_TEXT_MODEL", "gpt-4")
-        self.max_tokens = int(os.getenv("OPENAI_TEXT_MAX_TOKENS", "800"))
-        self.temperature = float(os.getenv("OPENAI_TEXT_TEMPERATURE", "0.7"))
+        self.model = OPENAI_TEXT_MODEL
+        self.max_tokens = OPENAI_TEXT_MAX_TOKENS
+        self.temperature = OPENAI_TEXT_TEMPERATURE
     
     def extract_product_info(self, user_text: str) -> Dict[str, Any]:
         """

@@ -1,12 +1,58 @@
+# Streamlit Cloud Configuration
+# This file contains non-sensitive configuration settings
+# It can be safely committed to version control
+
 [server]
+# Basic server configuration
 port = 8501
+address = "0.0.0.0"
+headless = true
+enableCORS = false
+enableXsrfProtection = true
+
+# File upload settings
 maxUploadSize = 10
+maxMessageSize = 200
+
+[browser]
+# Browser settings
+gatherUsageStats = false
+serverAddress = "0.0.0.0"
+serverPort = 8501
 
 [theme]
-primaryColor = "#FF6B35"
+# App theme configuration
+primaryColor = "#FF6B6B"
 backgroundColor = "#FFFFFF"
 secondaryBackgroundColor = "#F0F2F6"
 textColor = "#262730"
+font = "sans serif"
 
-[browser]
-gatherUsageStats = false
+[runner]
+# Runner settings for app execution
+magicEnabled = true
+installTracer = false
+fixMatplotlib = true
+postScriptGC = true
+
+[client]
+# Client-side settings
+caching = true
+displayEnabled = true
+showErrorDetails = true
+
+[logger]
+# Logging configuration
+level = "info"
+messageFormat = "%(asctime)s %(message)s"
+
+[deprecation]
+# Deprecation warnings
+showfileUploaderEncoding = false
+showImageFormat = false
+showPyplotGlobalUse = false
+
+[ui]
+# UI configuration
+hideTopBar = false
+hideSidebarNav = false

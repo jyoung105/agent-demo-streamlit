@@ -3,6 +3,8 @@ FastAPI backend for Banner Agent v2.
 Provides REST API endpoints for banner creation workflow.
 """
 import os
+import sys
+from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,12 +15,28 @@ from datetime import datetime
 import logging
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
-load_dotenv()
+# Try to import config loader from parent directory (when running embedded in Streamlit)
+try:
+    parent_dir = Path(__file__).parent.parent
+    sys.path.insert(0, str(parent_dir))
+    from config_loader import get_config, is_streamlit_cloud
+    USE_CONFIG_LOADER = True
+except ImportError:
+    USE_CONFIG_LOADER = False
+    # Define fallback functions
+    def get_config(key, default=None):
+        return os.getenv(key, default)
+    
+    def is_streamlit_cloud():
+        return os.getenv("STREAMLIT_SHARING_MODE") is not None or os.getenv("STREAMLIT_CLOUD") is not None
+
+# Load environment variables from .env file (for local development)
+if not is_streamlit_cloud():
+    load_dotenv()
 
 # Configure logging based on environment variables
-log_level = os.getenv("LOG_LEVEL", "INFO").upper()
-log_format = os.getenv("LOG_FORMAT", "%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+log_level = get_config("LOG_LEVEL", "INFO").upper()
+log_format = get_config("LOG_FORMAT", "%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
 logging.basicConfig(
     level=getattr(logging, log_level),
@@ -28,9 +46,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Create FastAPI application with environment-based configuration
-app_name = os.getenv("APP_NAME", "Banner Agent API v2")
-app_version = os.getenv("APP_VERSION", "2.0.0")
-app_description = os.getenv("APP_DESCRIPTION", "FastAPI backend for AI-powered banner creation using OpenAI")
+app_name = get_config("APP_NAME", "Banner Agent API v2")
+app_version = get_config("APP_VERSION", "2.0.0")
+app_description = get_config("APP_DESCRIPTION", "FastAPI backend for AI-powered banner creation using OpenAI")
 
 app = FastAPI(
     title=app_name,
@@ -41,7 +59,8 @@ app = FastAPI(
 )
 
 # Configure CORS with environment-based origins
-cors_origins = os.getenv("CORS_ORIGINS", "*").split(",") if os.getenv("CORS_ORIGINS") != "*" else ["*"]
+cors_origins_str = get_config("CORS_ORIGINS", "*")
+cors_origins = cors_origins_str.split(",") if cors_origins_str != "*" else ["*"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -93,7 +112,7 @@ async def startup_event():
     logger.info("Starting Banner Agent API v2...")
     
     # Check for required environment variables
-    if not os.getenv("OPENAI_API_KEY"):
+    if not get_config("OPENAI_API_KEY"):
         logger.error("OPENAI_API_KEY environment variable is not set")
         raise RuntimeError("OPENAI_API_KEY environment variable is required")
     
@@ -125,7 +144,7 @@ async def root():
         "message": app_name,
         "version": app_version,
         "description": app_description,
-        "environment": os.getenv("ENVIRONMENT", "development"),
+        "environment": get_config("ENVIRONMENT", "development"),
         "docs": "/docs",
         "health": "/api/banner/health",
         "endpoints": {
@@ -143,10 +162,10 @@ if __name__ == "__main__":
     import uvicorn
     
     # Get configuration from environment variables
-    host = os.getenv("API_HOST", "0.0.0.0")
-    port = int(os.getenv("API_PORT", "8000"))
-    reload = os.getenv("API_RELOAD", "true").lower() == "true"
-    log_level = os.getenv("LOG_LEVEL", "info").lower()
+    host = get_config("API_HOST", "0.0.0.0")
+    port = int(get_config("API_PORT", "8000"))
+    reload = get_config("API_RELOAD", "true").lower() == "true"
+    log_level = get_config("LOG_LEVEL", "info").lower()
     
     uvicorn.run(
         "main:app",

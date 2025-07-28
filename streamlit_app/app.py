@@ -74,9 +74,12 @@ st.set_page_config(
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Import configuration loader
+from config_loader import get_config, is_streamlit_cloud, get_all_config
+
 # Constants - Dynamic port assignment for Streamlit Cloud
-IS_STREAMLIT_CLOUD = os.getenv("STREAMLIT_SHARING_MODE") is not None or os.getenv("STREAMLIT_CLOUD") is not None
-API_PORT = int(os.getenv("PORT", "8001")) if not IS_STREAMLIT_CLOUD else 8001
+IS_STREAMLIT_CLOUD = is_streamlit_cloud()
+API_PORT = int(get_config("PORT", "8001")) if not IS_STREAMLIT_CLOUD else 8001
 API_BASE_URL = f"http://localhost:{API_PORT}"
 FASTAPI_STARTUP_TIMEOUT = 30  # seconds
 

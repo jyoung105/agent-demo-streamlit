@@ -20,6 +20,7 @@ from database import (
     LayoutExtraction, BannerJob, update_step_status, 
     StepStatus, JobStatus, update_job_status
 )
+from ..config import get_config, OPENAI_VISION_MODEL, OPENAI_VISION_MAX_TOKENS, OPENAI_VISION_TEMPERATURE
 
 # Add streamlit_app directory to path for bbox system imports
 streamlit_app_dir = Path(__file__).parent.parent.parent
@@ -50,9 +51,9 @@ class BannerLayoutService:
     def __init__(self, openai_client: OpenAI, db_session: Session):
         self.client = openai_client
         self.db = db_session
-        self.model = os.getenv("OPENAI_VISION_MODEL", "gpt-4o")
-        self.max_tokens = int(os.getenv("OPENAI_VISION_MAX_TOKENS", "2000"))
-        self.temperature = float(os.getenv("OPENAI_VISION_TEMPERATURE", "0.1"))
+        self.model = OPENAI_VISION_MODEL
+        self.max_tokens = OPENAI_VISION_MAX_TOKENS
+        self.temperature = OPENAI_VISION_TEMPERATURE
         
         # Initialize bbox system components
         self.bbox_extractor = BboxExtractor()
