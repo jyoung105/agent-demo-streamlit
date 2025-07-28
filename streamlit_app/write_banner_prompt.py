@@ -21,7 +21,7 @@ class BannerPromptOptimizer:
     def __init__(self, api_key: Optional[str] = None):
         """Initialize with Gemini API."""
         self.client = genai.Client(
-            api_key=api_key or os.environ.get("GEMINI_API_KEY")
+            api_key=api_key or os.environ.get("YOUR_GEMINI_API_KEY")
         )
         self.model = "gemini-2.5-pro"
     

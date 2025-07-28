@@ -22,7 +22,7 @@ def extract_layout_from_image(image_path):
     """
     # Create the Gemini client using the API key from environment variables
     client = genai.Client(
-        api_key=os.environ.get("AIzaSyALC5BkrNZ6hyvO321PnSvbH93mdMmPDi0"),
+        api_key=os.environ.get("YOUR_GEMINI_API_KEY"),
     )
 
     model = "gemini-2.5-pro"
